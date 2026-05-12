@@ -1,0 +1,5 @@
+# Managed source paths for yi.wuaishare.cn.
+# Paths are relative to the WordPress root.
+
+wp-content/plugins/yi-tools-core/
+wp-content/themes/yi-theme/

@@ -1,0 +1,31 @@
+# Runtime and dependency state
+.DS_Store
+.env
+.env.*
+node_modules/
+vendor/
+
+# WordPress runtime files
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/languages/
+wp-content/ai1wm-backups/
+wp-content/backups/
+wp-content/wflogs/
+
+# Local verification artifacts
+.codex/
+*.log
+*.sql
+*.sql.gz
+*.tgz
+*.tar.gz
+
+# Keep custom source paths tracked
+!wp-content/
+!wp-content/plugins/
+!wp-content/plugins/yi-tools-core/
+!wp-content/themes/
+!wp-content/themes/yi-theme/
