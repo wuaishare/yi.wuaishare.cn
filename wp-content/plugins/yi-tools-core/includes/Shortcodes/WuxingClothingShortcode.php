@@ -13,8 +13,10 @@ final class WuxingClothingShortcode {
 	public static function render( array $atts = array() ): string {
 		$raw_date = isset( $_GET['date'] ) ? sanitize_text_field( wp_unslash( $_GET['date'] ) ) : wp_date( 'Y-m-d' );
 		$result   = ClothingColors::build_for_date_string( $raw_date );
+		$notice   = '';
 
 		if ( is_wp_error( $result ) ) {
+			$notice = $result->get_error_message() . ' 已显示今日结果。';
 			$result = ClothingColors::build_for_date_string( wp_date( 'Y-m-d' ) );
 		}
 
@@ -32,19 +34,22 @@ final class WuxingClothingShortcode {
 			<div class="yi-wuxing-hero yi-season-<?php echo esc_attr( $result['season'] ); ?>">
 				<div class="yi-wuxing-hero__body">
 					<p class="yi-wuxing-kicker">五行穿衣指南</p>
-					<h1><?php echo esc_html( $result['display_date'] ); ?>穿衣颜色参考</h1>
+					<h1>
+						<span class="yi-wuxing-date-title"><?php echo esc_html( $result['display_date'] ); ?></span>
+						<span>穿衣颜色参考</span>
+					</h1>
 					<p class="yi-wuxing-summary">
 						<?php echo esc_html( $result['weekday'] ); ?>，<?php echo esc_html( $result['ganzhi_day'] ); ?>，日五行为<?php echo esc_html( $result['day_element'] ); ?>。
 					</p>
 					<div class="yi-wuxing-actions">
-						<a class="yi-button yi-button--ghost" href="<?php echo esc_url( add_query_arg( 'date', $previous ) ); ?>">前一天</a>
+						<a class="yi-button yi-button--ghost yi-button--prev" href="<?php echo esc_url( add_query_arg( 'date', $previous ) ); ?>">前一天</a>
 						<form class="yi-date-form" method="get">
 							<label for="yi-wuxing-date">选择日期</label>
 							<input id="yi-wuxing-date" type="date" name="date" value="<?php echo esc_attr( $result['date'] ); ?>">
 							<button class="yi-button" type="submit">查询</button>
 						</form>
-						<a class="yi-button yi-button--ghost" href="<?php echo esc_url( add_query_arg( 'date', $next ) ); ?>">后一天</a>
-						<a class="yi-button yi-button--plain" href="<?php echo esc_url( add_query_arg( 'date', $today ) ); ?>">回到今天</a>
+						<a class="yi-button yi-button--ghost yi-button--next" href="<?php echo esc_url( add_query_arg( 'date', $next ) ); ?>">后一天</a>
+						<a class="yi-button yi-button--plain yi-button--today" href="<?php echo esc_url( add_query_arg( 'date', $today ) ); ?>">回到今天</a>
 					</div>
 				</div>
 				<div class="yi-wuxing-hero__panel" aria-label="今日大吉色">
@@ -53,6 +58,10 @@ final class WuxingClothingShortcode {
 					<?php self::render_swatches( $result['colors']['lucky'] ); ?>
 				</div>
 			</div>
+
+			<?php if ( '' !== $notice ) : ?>
+				<p class="yi-tool-alert" role="status"><?php echo esc_html( $notice ); ?></p>
+			<?php endif; ?>
 
 			<div class="yi-wuxing-facts" aria-label="日期信息">
 				<?php self::render_fact( '公历', $result['display_date'] ); ?>

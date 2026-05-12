@@ -13,6 +13,32 @@ get_header();
 	</div>
 </section>
 
+<?php
+$daily_query = new WP_Query(
+	array(
+		'category_name'  => 'wuxing-chuanyi',
+		'posts_per_page' => 1,
+		'no_found_rows'  => true,
+	)
+);
+?>
+<section class="home-daily" aria-label="每日五行穿衣">
+	<div>
+		<p class="eyebrow">每日五行穿衣</p>
+		<h2>先查今天，再读每日说明</h2>
+	</div>
+	<div class="home-daily__actions">
+		<a class="yi-button" href="<?php echo esc_url( home_url( '/wuxing-chuanyi/' ) ); ?>">打开五行穿衣工具</a>
+		<?php if ( $daily_query->have_posts() ) : ?>
+			<?php
+			$daily_query->the_post();
+			?>
+			<a class="yi-button yi-button--ghost" href="<?php the_permalink(); ?>">阅读最新日更</a>
+			<?php wp_reset_postdata(); ?>
+		<?php endif; ?>
+	</div>
+</section>
+
 <?php if ( have_posts() ) : ?>
 	<section class="post-list" aria-label="最新内容">
 		<h2>最新内容</h2>

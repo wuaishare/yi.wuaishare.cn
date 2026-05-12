@@ -109,6 +109,25 @@ curl -H 'Host: yi.wuaishare.cn' http://127.0.0.1/
 
 `http://192.168.31.24:13305/wp/local` 当前会进入宝塔面板安全入口校验页，不是 WordPress 前台验收地址。
 
+## 访问稳定巡检
+
+第二阶段开始使用只读脚本统一巡检口径：
+
+```bash
+scripts/check-access-bt4.sh
+```
+
+这个脚本会检查：
+
+- WordPress runtime 基础信息。
+- bt4 Nginx vhost 中的 `proxy_protocol`、证书路径和证书 SAN。
+- frp 配置中的 `proxyProtocolVersion` 线索。
+- 公共 DNS 解析结果。
+- 经过 Cloudflare 的首页、工具页、REST API HTTPS 状态。
+- bt4 直连反例，用来证明 proxy protocol 行为，不作为前台故障结论。
+
+当前源站证书是 Cloudflare Origin CA，SAN 覆盖 `*.wuaishare.cn` 与 `wuaishare.cn`。这类证书只适合 Cloudflare/代理链路，不适合用浏览器或普通 curl 直接访问源站判断公网证书是否有效。
+
 Nginx 配置测试：
 
 ```bash
@@ -174,3 +193,21 @@ wp-content/themes/yi-theme/
 - SEO title、description、canonical 符合策略。
 - 免责声明可见但不喧宾夺主。
 - 日更文章能导流到工具页。
+
+## 五行穿衣日更文章
+
+部署 `yi-tools-core` 后，可以用 WP-CLI 生成或更新每日文章：
+
+```bash
+ssh bt4 "wp --allow-root --path=/www/wwwroot/yi.wuaishare.cn yi-tools publish-daily-wuxing --date=today"
+ssh bt4 "wp --allow-root --path=/www/wwwroot/yi.wuaishare.cn yi-tools publish-daily-wuxing --date=tomorrow --dry-run"
+ssh bt4 "wp --allow-root --path=/www/wwwroot/yi.wuaishare.cn yi-tools publish-daily-wuxing --date=2026-05-13"
+```
+
+命令会按日期 slug 创建或更新文章，例如：
+
+```text
+wuxing-chuanyi-2026-05-13
+```
+
+文章会自动归入 `五行穿衣` 分类，并写入 `_yi_wuxing_date` 元数据。主题单篇模板会据此在文末输出工具页导流入口。后续配置计划任务时，建议先跑 `--dry-run`，确认标题、slug、摘要正常后再写入。
