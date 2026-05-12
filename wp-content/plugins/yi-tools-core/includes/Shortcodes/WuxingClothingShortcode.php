@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace YiToolsCore\Shortcodes;
 
 use YiToolsCore\Wuxing\ClothingColors;
+use YiToolsCore\Wuxing\ColorMarkup;
 
 final class WuxingClothingShortcode {
 	public static function register(): void {
@@ -54,7 +55,7 @@ final class WuxingClothingShortcode {
 				</div>
 				<div class="yi-wuxing-hero__panel" aria-label="今日大吉色">
 					<span>大吉色</span>
-					<strong><?php echo esc_html( implode( '、', array_column( $result['colors']['lucky'], 'name' ) ) ); ?></strong>
+					<strong><?php echo esc_html( ColorMarkup::names( $result['colors']['lucky'] ) ); ?></strong>
 					<?php self::render_swatches( $result['colors']['lucky'] ); ?>
 				</div>
 			</div>
@@ -111,7 +112,7 @@ final class WuxingClothingShortcode {
 				<h2><?php echo esc_html( $title ); ?></h2>
 				<p><?php echo esc_html( $description ); ?></p>
 			</div>
-			<strong><?php echo esc_html( implode( '、', array_column( $colors, 'name' ) ) ); ?></strong>
+			<strong><?php echo esc_html( ColorMarkup::names( $colors ) ); ?></strong>
 			<?php self::render_swatches( $colors ); ?>
 		</article>
 		<?php

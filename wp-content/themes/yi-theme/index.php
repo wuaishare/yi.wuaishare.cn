@@ -47,8 +47,21 @@ $daily_query = new WP_Query(
 			the_post();
 			?>
 			<article <?php post_class( 'post-card' ); ?>>
-				<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-				<div class="post-card__excerpt"><?php the_excerpt(); ?></div>
+				<?php if ( has_post_thumbnail() ) : ?>
+					<a class="post-card__thumb" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
+						<?php the_post_thumbnail( 'medium' ); ?>
+					</a>
+				<?php endif; ?>
+				<div class="post-card__body">
+					<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+					<?php
+					$post_lucky_colors = (string) get_post_meta( get_the_ID(), '_yi_wuxing_lucky_colors', true );
+					if ( $post_lucky_colors ) :
+						?>
+						<p class="post-card__meta">大吉色：<?php echo esc_html( $post_lucky_colors ); ?></p>
+					<?php endif; ?>
+					<div class="post-card__excerpt"><?php the_excerpt(); ?></div>
+				</div>
 			</article>
 			<?php
 		endwhile;

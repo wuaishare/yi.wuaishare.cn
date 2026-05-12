@@ -17,6 +17,7 @@ wp-content/wflogs/
 
 # Local verification artifacts
 .codex/
+tmp/
 *.log
 *.sql
 *.sql.gz

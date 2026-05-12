@@ -168,8 +168,30 @@ a {
 }
 
 .post-card {
+	display: grid;
+	grid-template-columns: 180px minmax(0, 1fr);
+	gap: 18px;
+	align-items: start;
 	padding: 22px 0;
 	border-top: 1px solid var(--yi-line);
+}
+
+.post-card__thumb img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 10;
+	border-radius: var(--yi-radius);
+	object-fit: cover;
+}
+
+.post-card__body {
+	min-width: 0;
+}
+
+.post-card__meta {
+	margin: 4px 0 8px;
+	color: var(--yi-muted);
+	font-size: 14px;
 }
 
 .yi-wuxing-tool {
@@ -336,6 +358,183 @@ a {
 	max-width: 760px;
 }
 
+.yi-entry-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	max-width: 780px;
+	margin-top: 16px;
+}
+
+.yi-entry-meta span {
+	padding: 5px 10px;
+	border: 1px solid var(--yi-line);
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.7);
+	color: #4b5563;
+	font-size: 14px;
+}
+
+.yi-entry-figure {
+	max-width: 860px;
+	margin: 24px 0 30px;
+}
+
+.yi-entry-figure img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 9;
+	border-radius: var(--yi-radius);
+	object-fit: cover;
+}
+
+.yi-entry-figure figcaption {
+	margin-top: 9px;
+	color: var(--yi-muted);
+	font-size: 14px;
+}
+
+.yi-daily-post {
+	max-width: 860px;
+}
+
+.yi-daily-post > section {
+	margin-top: 30px;
+}
+
+.yi-daily-post h2 {
+	max-width: 760px;
+	margin: 0 0 12px;
+	font-size: 28px;
+	line-height: 1.25;
+}
+
+.yi-daily-post p {
+	max-width: 760px;
+}
+
+.yi-daily-lead {
+	padding: 16px 18px;
+	border-left: 4px solid var(--yi-green);
+	border-radius: var(--yi-radius);
+	background: rgba(47, 133, 90, 0.08);
+	font-weight: 700;
+}
+
+.yi-daily-color-list {
+	display: grid;
+	gap: 12px;
+	max-width: 860px;
+}
+
+.yi-daily-color-row {
+	display: grid;
+	grid-template-columns: 150px minmax(0, 1fr);
+	gap: 18px;
+	padding: 18px;
+	border: 1px solid var(--yi-line);
+	border-radius: var(--yi-radius);
+	background: rgba(255, 255, 255, 0.78);
+}
+
+.yi-daily-color-row__label {
+	display: block;
+	color: var(--yi-muted);
+	font-size: 13px;
+}
+
+.yi-daily-color-row strong {
+	display: block;
+	margin-top: 4px;
+	font-size: 20px;
+}
+
+.yi-daily-color-row p {
+	margin: 10px 0 0;
+	color: #4b5563;
+	font-size: 15px;
+}
+
+.yi-color-tokens {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+}
+
+.yi-color-token {
+	display: inline-flex;
+	gap: 6px;
+	align-items: center;
+	min-height: 32px;
+	padding: 4px 10px 4px 6px;
+	border: 1px solid rgba(31, 41, 51, 0.14);
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.78);
+	color: var(--yi-color-text, var(--yi-color));
+	font-weight: 800;
+	overflow-wrap: anywhere;
+}
+
+.yi-color-token__swatch {
+	width: 20px;
+	height: 20px;
+	border: 1px solid rgba(31, 41, 51, 0.18);
+	border-radius: 999px;
+	background: var(--yi-color);
+}
+
+.yi-scene-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 12px;
+	max-width: 860px;
+}
+
+.yi-scene-card,
+.yi-element-table__row,
+.yi-daily-faq details {
+	padding: 16px;
+	border: 1px solid var(--yi-line);
+	border-radius: var(--yi-radius);
+	background: rgba(255, 255, 255, 0.72);
+}
+
+.yi-scene-card strong,
+.yi-element-table__row strong,
+.yi-daily-faq summary {
+	font-weight: 800;
+}
+
+.yi-scene-card p,
+.yi-daily-faq p {
+	margin: 8px 0 0;
+	color: #4b5563;
+	font-size: 15px;
+}
+
+.yi-element-table {
+	display: grid;
+	gap: 10px;
+	max-width: 860px;
+}
+
+.yi-element-table__row {
+	display: grid;
+	grid-template-columns: 80px minmax(0, 1fr);
+	gap: 14px;
+	align-items: center;
+}
+
+.yi-daily-faq {
+	max-width: 760px;
+}
+
+.yi-daily-faq details + details {
+	margin-top: 10px;
+}
+
 .yi-daily-tool-cta,
 .yi-article-cta {
 	max-width: 760px;
@@ -370,6 +569,10 @@ a {
 	.yi-color-card {
 		min-height: 0;
 	}
+
+	.yi-scene-grid {
+		grid-template-columns: 1fr;
+	}
 }
 
 @media (max-width: 640px) {
@@ -391,6 +594,16 @@ a {
 	.home-daily__actions,
 	.home-daily__actions .yi-button {
 		width: 100%;
+	}
+
+	.post-card,
+	.yi-daily-color-row,
+	.yi-element-table__row {
+		grid-template-columns: 1fr;
+	}
+
+	.post-card__thumb img {
+		aspect-ratio: 16 / 9;
 	}
 
 	.home-hero h1,
@@ -460,9 +673,17 @@ a {
 	.yi-color-card,
 	.yi-wuxing-advice,
 	.yi-wuxing-notes,
+	.yi-daily-color-row,
+	.yi-scene-card,
+	.yi-element-table__row,
+	.yi-daily-faq details,
 	.yi-daily-tool-cta,
 	.yi-article-cta {
 		padding: 16px;
+	}
+
+	.yi-daily-post h2 {
+		font-size: 24px;
 	}
 }
 

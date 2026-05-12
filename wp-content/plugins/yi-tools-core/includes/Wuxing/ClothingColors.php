@@ -14,7 +14,7 @@ final class ClothingColors {
 		'木' => array(
 			array( 'name' => '绿色', 'hex' => '#2f855a' ),
 			array( 'name' => '青色', 'hex' => '#0f766e' ),
-			array( 'name' => '浅绿', 'hex' => '#86c98b' ),
+			array( 'name' => '浅绿', 'hex' => '#86c98b', 'text_hex' => '#2f855a' ),
 		),
 		'火' => array(
 			array( 'name' => '红色', 'hex' => '#c53030' ),
@@ -23,18 +23,18 @@ final class ClothingColors {
 			array( 'name' => '橙红', 'hex' => '#dd6b20' ),
 		),
 		'土' => array(
-			array( 'name' => '黄色', 'hex' => '#d69e2e' ),
+			array( 'name' => '黄色', 'hex' => '#d69e2e', 'text_hex' => '#8a5a08' ),
 			array( 'name' => '咖色', 'hex' => '#8b5e34' ),
 			array( 'name' => '棕色', 'hex' => '#7b341e' ),
-			array( 'name' => '米黄', 'hex' => '#ead7a4' ),
+			array( 'name' => '米黄', 'hex' => '#ead7a4', 'text_hex' => '#8a5a08' ),
 			array( 'name' => '驼色', 'hex' => '#b8895b' ),
 		),
 		'金' => array(
-			array( 'name' => '白色', 'hex' => '#f7fafc' ),
-			array( 'name' => '银色', 'hex' => '#cbd5e0' ),
+			array( 'name' => '白色', 'hex' => '#f7fafc', 'text_hex' => '#4b5563' ),
+			array( 'name' => '银色', 'hex' => '#cbd5e0', 'text_hex' => '#64748b' ),
 			array( 'name' => '灰色', 'hex' => '#718096' ),
 			array( 'name' => '金色', 'hex' => '#b7791f' ),
-			array( 'name' => '米白', 'hex' => '#f5f0df' ),
+			array( 'name' => '米白', 'hex' => '#f5f0df', 'text_hex' => '#7c6f4d' ),
 		),
 		'水' => array(
 			array( 'name' => '黑色', 'hex' => '#111827' ),

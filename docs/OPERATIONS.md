@@ -211,3 +211,19 @@ wuxing-chuanyi-2026-05-13
 ```
 
 文章会自动归入 `五行穿衣` 分类，并写入 `_yi_wuxing_date` 元数据。主题单篇模板会据此在文末输出工具页导流入口。后续配置计划任务时，建议先跑 `--dry-run`，确认标题、slug、摘要正常后再写入。
+
+如果已经有媒体库附件，可以同时绑定精选图：
+
+```bash
+ssh bt4 "wp --allow-root --path=/www/wwwroot/yi.wuaishare.cn yi-tools publish-daily-wuxing --date=2026-05-13 --image-attachment-id=10"
+```
+
+本地可先生成一张基础封面，再通过 `wp media import` 导入媒体库：
+
+```bash
+scripts/generate-wuxing-cover.sh 2026-05-13
+scp tmp/generated-media/wuxing-chuanyi-2026-05-13-cover.webp bt4:/tmp/
+ssh bt4 "wp --allow-root --path=/www/wwwroot/yi.wuaishare.cn media import /tmp/wuxing-chuanyi-2026-05-13-cover.webp --post_id=8 --featured_image --porcelain"
+```
+
+`tmp/` 是本地生成物目录，不纳入 Git。长期更高质量图片可以接入图片生成模型或手工设计稿，但最终都应进入 WordPress 媒体库并以 attachment ID 绑定，不要把本地文件路径写入正文。
