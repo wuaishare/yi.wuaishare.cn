@@ -212,18 +212,25 @@ wuxing-chuanyi-2026-05-13
 
 文章会自动归入 `五行穿衣` 分类，并写入 `_yi_wuxing_date` 元数据。主题单篇模板会据此在文末输出工具页导流入口。后续配置计划任务时，建议先跑 `--dry-run`，确认标题、slug、摘要正常后再写入。
 
-如果已经有媒体库附件，可以同时绑定精选图：
+如果已经有媒体库附件，可以同时绑定精选图。日更文章优先使用真实穿搭、衣物平铺、生活方式摄影或手工设计稿，不使用纯色卡占位图作为正式封面：
 
 ```bash
 ssh bt4 "wp --allow-root --path=/www/wwwroot/yi.wuaishare.cn yi-tools publish-daily-wuxing --date=2026-05-13 --image-attachment-id=10"
 ```
 
-本地可先生成一张基础封面，再通过 `wp media import` 导入媒体库：
+本地图片、AI 生成图或公开授权素材统一先进入媒体库，再用 attachment ID 绑定：
 
 ```bash
-scripts/generate-wuxing-cover.sh 2026-05-13
 scp tmp/generated-media/wuxing-chuanyi-2026-05-13-cover.webp bt4:/tmp/
-ssh bt4 "wp --allow-root --path=/www/wwwroot/yi.wuaishare.cn media import /tmp/wuxing-chuanyi-2026-05-13-cover.webp --post_id=8 --featured_image --porcelain"
+ssh bt4 "wp --allow-root --path=/www/wwwroot/yi.wuaishare.cn media import /tmp/wuxing-chuanyi-2026-05-13-cover.webp --post_id=8 --title='2026年5月13日五行穿衣指南配图' --caption='绿青系穿衣参考。' --alt='绿色、青色、浅绿穿搭参考' --featured_image --porcelain"
 ```
 
-`tmp/` 是本地生成物目录，不纳入 Git。长期更高质量图片可以接入图片生成模型或手工设计稿，但最终都应进入 WordPress 媒体库并以 attachment ID 绑定，不要把本地文件路径写入正文。
+`tmp/` 是本地生成物目录，不纳入 Git。最终图片都应进入 WordPress 媒体库并以 attachment ID 绑定，不要把本地文件路径写入正文。使用公开素材时，caption 或媒体说明中保留来源。
+
+`yi-tools-core` 会在 WordPress 上传和 WP-CLI 媒体导入时自动优化图片：
+
+- PNG、JPEG、WebP 会统一转为 WebP。
+- 最大宽高限制为 1600x1200。
+- WebP 质量为 82。
+
+因此日更配图可以先用原始大图导入媒体库，再由插件落盘为轻量 WebP 附件和响应式缩略图。
