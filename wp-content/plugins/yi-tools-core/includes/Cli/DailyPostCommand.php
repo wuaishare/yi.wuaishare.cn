@@ -125,11 +125,15 @@ final class DailyPostCommand {
 		<article class="yi-daily-post yi-daily-post--wuxing">
 			<section class="yi-daily-intro" aria-label="<?php echo esc_attr( $label ); ?>五行穿衣概览">
 				<p><?php echo esc_html( $result['display_date'] ); ?>是<?php echo esc_html( $result['weekday'] ); ?>，<?php echo esc_html( $result['ganzhi_day'] ); ?>，日五行为<?php echo esc_html( $result['day_element'] ); ?>。</p>
-				<p class="yi-daily-lead"><?php echo esc_html( $label ); ?>大吉色：<?php echo wp_kses_post( ColorMarkup::tokens( $result['colors']['lucky'], $result['elements']['lucky'] ) ); ?>。次吉色可选<?php echo wp_kses_post( ColorMarkup::tokens( $result['colors']['secondary'], $result['elements']['secondary'] ) ); ?>，<?php echo esc_html( self::color_names( $result['colors']['avoid'] ) ); ?>不建议大面积使用。</p>
+				<div class="yi-daily-lead" role="note" aria-label="今日穿衣重点">
+					<?php echo wp_kses_post( $this->render_lead_row( 'lucky', $label . '大吉色', ColorMarkup::tokens( $result['colors']['lucky'], $result['elements']['lucky'] ) ) ); ?>
+					<?php echo wp_kses_post( $this->render_lead_row( 'secondary', '次吉色可选', ColorMarkup::tokens( $result['colors']['secondary'], $result['elements']['secondary'] ) ) ); ?>
+					<?php echo wp_kses_post( $this->render_lead_row( 'avoid', '穿衣提醒', esc_html( self::color_names( $result['colors']['avoid'] ) ) . '不建议大面积使用。' ) ); ?>
+				</div>
 			</section>
 
 			<section class="yi-daily-answer" aria-labelledby="yi-daily-answer-<?php echo esc_attr( $result['date'] ); ?>">
-				<h2 id="yi-daily-answer-<?php echo esc_attr( $result['date'] ); ?>"><?php echo esc_html( $label ); ?>颜色速查</h2>
+				<h2 id="yi-daily-answer-<?php echo esc_attr( $result['date'] ); ?>"><span class="yi-section-icon" aria-hidden="true">✦</span><?php echo esc_html( $label ); ?>颜色速查</h2>
 				<div class="yi-daily-color-list">
 					<?php echo wp_kses_post( $this->render_color_group( 'lucky', '大吉色', '适合做上衣、外套或整体主色。', $result['elements']['lucky'], $result['colors']['lucky'] ) ); ?>
 					<?php echo wp_kses_post( $this->render_color_group( 'secondary', '次吉色', '适合通勤、会议和日常搭配。', $result['elements']['secondary'], $result['colors']['secondary'] ) ); ?>
@@ -140,11 +144,11 @@ final class DailyPostCommand {
 			</section>
 
 			<section aria-labelledby="yi-daily-scenes-<?php echo esc_attr( $result['date'] ); ?>">
-				<h2 id="yi-daily-scenes-<?php echo esc_attr( $result['date'] ); ?>">简单搭配建议</h2>
+				<h2 id="yi-daily-scenes-<?php echo esc_attr( $result['date'] ); ?>"><span class="yi-section-icon" aria-hidden="true">☘</span>简单搭配建议</h2>
 				<div class="yi-scene-grid">
-					<?php echo wp_kses_post( $this->render_scene_card( '通勤', sprintf( '%s上衣配%s下装，稳妥不突兀。', self::color_names( array_slice( $result['colors']['lucky'], 0, 2 ) ), self::color_names( array_slice( $result['colors']['secondary'], 0, 2 ) ) ) ) ); ?>
-					<?php echo wp_kses_post( $this->render_scene_card( '见面', '把大吉色放在靠近脸部的位置，比如衬衫、外套、围巾或领带。' ) ); ?>
-					<?php echo wp_kses_post( $this->render_scene_card( '休闲', '不必全身同色，用包、鞋、袜子小面积呼应即可。' ) ); ?>
+					<?php echo wp_kses_post( $this->render_scene_card( '💼', '通勤', sprintf( '%s上衣配%s下装，稳妥不突兀。', self::color_names( array_slice( $result['colors']['lucky'], 0, 2 ) ), self::color_names( array_slice( $result['colors']['secondary'], 0, 2 ) ) ) ) ); ?>
+					<?php echo wp_kses_post( $this->render_scene_card( '🤝', '见面', '把大吉色放在靠近脸部的位置，比如衬衫、外套、围巾或领带。' ) ); ?>
+					<?php echo wp_kses_post( $this->render_scene_card( '☕', '休闲', '不必全身同色，用包、鞋、袜子小面积呼应即可。' ) ); ?>
 				</div>
 			</section>
 
@@ -158,21 +162,33 @@ final class DailyPostCommand {
 		return trim( (string) ob_get_clean() );
 	}
 
+	private function render_lead_row( string $tone, string $label, string $content_html ): string {
+		return sprintf(
+			'<p class="yi-daily-lead__row" data-tone="%s"><span class="yi-daily-lead__label">%s</span><span class="yi-daily-lead__content">%s</span></p>',
+			esc_attr( $tone ),
+			esc_html( $label ),
+			$content_html
+		);
+	}
+
 	private function render_color_group( string $level, string $title, string $description, string $element, array $colors ): string {
 		return sprintf(
-			'<div class="yi-daily-color-row" data-level="%s" data-element="%s"><div><span class="yi-daily-color-row__label">%s</span><strong>%s</strong></div><div>%s<p>%s</p></div></div>',
+			'<div class="yi-daily-color-row" data-level="%s" data-element="%s"><div class="yi-daily-color-row__head"><span class="yi-daily-color-row__label"><span class="yi-daily-color-row__badge" aria-hidden="true">%s</span>%s</span><strong><span class="yi-daily-color-row__element-badge" aria-hidden="true">%s</span>%s</strong></div><div class="yi-daily-color-row__body">%s<p>%s</p></div></div>',
 			esc_attr( $level ),
 			esc_attr( $element ),
+			esc_html( self::level_icon( $level ) ),
 			esc_html( $title ),
+			esc_html( mb_substr( $element, 0, 1 ) ),
 			esc_html( $element . '系' ),
 			ColorMarkup::tokens( $colors, $element ),
 			esc_html( $description )
 		);
 	}
 
-	private function render_scene_card( string $title, string $description ): string {
+	private function render_scene_card( string $icon, string $title, string $description ): string {
 		return sprintf(
-			'<div class="yi-scene-card"><strong>%s</strong><p>%s</p></div>',
+			'<div class="yi-scene-card"><strong><span class="yi-scene-card__icon" aria-hidden="true">%s</span><span>%s</span></strong><p>%s</p></div>',
+			esc_html( $icon ),
 			esc_html( $title ),
 			esc_html( $description )
 		);
@@ -196,6 +212,17 @@ final class DailyPostCommand {
 
 	private static function color_names( array $colors ): string {
 		return ColorMarkup::names( $colors );
+	}
+
+	private static function level_icon( string $level ): string {
+		return match ( $level ) {
+			'lucky' => '✦',
+			'secondary' => '◐',
+			'neutral' => '◌',
+			'caution' => '△',
+			'avoid' => '✕',
+			default => '•',
+		};
 	}
 
 	private static function relative_label( string $date ): string {

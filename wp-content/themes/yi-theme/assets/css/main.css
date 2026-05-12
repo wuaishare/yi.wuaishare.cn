@@ -375,6 +375,12 @@ a {
 	font-size: 14px;
 }
 
+.yi-entry-header h1 {
+	max-width: 760px;
+	font-size: clamp(26px, 3vw, 38px);
+	line-height: 1.18;
+}
+
 .yi-entry-figure {
 	max-width: 860px;
 	margin: 24px 0 30px;
@@ -415,11 +421,71 @@ a {
 }
 
 .yi-daily-lead {
-	padding: 16px 18px;
-	border-left: 4px solid var(--yi-green);
+	display: grid;
+	gap: 10px;
+	padding: 18px;
+	border: 1px solid rgba(47, 133, 90, 0.16);
 	border-radius: var(--yi-radius);
-	background: rgba(47, 133, 90, 0.08);
+	background:
+		radial-gradient(circle at top right, rgba(47, 133, 90, 0.1), transparent 34%),
+		rgba(255, 255, 255, 0.82);
+}
+
+.yi-daily-lead__row {
+	display: grid;
+	grid-template-columns: 108px minmax(0, 1fr);
+	gap: 12px;
+	align-items: start;
+	margin: 0;
+}
+
+.yi-daily-lead__row + .yi-daily-lead__row {
+	padding-top: 10px;
+	border-top: 1px dashed rgba(31, 41, 51, 0.12);
+}
+
+.yi-daily-lead__label {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 32px;
+	padding: 0 10px;
+	border-radius: 999px;
+	font-size: 13px;
+	font-weight: 800;
+}
+
+.yi-daily-lead__content {
 	font-weight: 700;
+}
+
+.yi-daily-lead__row[data-tone="lucky"] .yi-daily-lead__label {
+	background: rgba(47, 133, 90, 0.14);
+	color: var(--yi-green);
+}
+
+.yi-daily-lead__row[data-tone="secondary"] .yi-daily-lead__label {
+	background: rgba(31, 78, 121, 0.12);
+	color: var(--yi-blue);
+}
+
+.yi-daily-lead__row[data-tone="avoid"] .yi-daily-lead__label {
+	background: rgba(184, 50, 42, 0.12);
+	color: var(--yi-red);
+}
+
+.yi-section-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	margin-right: 10px;
+	border-radius: 999px;
+	background: rgba(183, 121, 31, 0.12);
+	color: var(--yi-gold);
+	font-size: 16px;
+	vertical-align: 2px;
 }
 
 .yi-daily-color-list {
@@ -436,18 +502,98 @@ a {
 	border: 1px solid var(--yi-line);
 	border-radius: var(--yi-radius);
 	background: rgba(255, 255, 255, 0.78);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.yi-daily-color-row[data-level="lucky"] {
+	border-color: rgba(47, 133, 90, 0.22);
+	background: linear-gradient(90deg, rgba(47, 133, 90, 0.09), rgba(255, 255, 255, 0.9) 30%);
+}
+
+.yi-daily-color-row[data-level="secondary"] {
+	border-color: rgba(31, 78, 121, 0.18);
+	background: linear-gradient(90deg, rgba(31, 78, 121, 0.08), rgba(255, 255, 255, 0.9) 30%);
+}
+
+.yi-daily-color-row[data-level="neutral"] {
+	border-color: rgba(183, 121, 31, 0.2);
+	background: linear-gradient(90deg, rgba(183, 121, 31, 0.08), rgba(255, 255, 255, 0.9) 30%);
+}
+
+.yi-daily-color-row[data-level="caution"] {
+	border-color: rgba(107, 114, 128, 0.24);
+	background: linear-gradient(90deg, rgba(148, 163, 184, 0.12), rgba(255, 255, 255, 0.92) 30%);
+}
+
+.yi-daily-color-row[data-level="avoid"] {
+	border-color: rgba(184, 50, 42, 0.18);
+	background: linear-gradient(90deg, rgba(184, 50, 42, 0.08), rgba(255, 255, 255, 0.9) 30%);
+}
+
+.yi-daily-color-row[data-element="木"] {
+	--yi-element-accent: var(--yi-green);
+}
+
+.yi-daily-color-row[data-element="水"] {
+	--yi-element-accent: var(--yi-blue);
+}
+
+.yi-daily-color-row[data-element="土"] {
+	--yi-element-accent: var(--yi-gold);
+}
+
+.yi-daily-color-row[data-element="金"] {
+	--yi-element-accent: #64748b;
+}
+
+.yi-daily-color-row[data-element="火"] {
+	--yi-element-accent: var(--yi-red);
+}
+
+.yi-daily-color-row__head {
+	display: grid;
+	gap: 8px;
 }
 
 .yi-daily-color-row__label {
-	display: block;
+	display: inline-flex;
+	gap: 6px;
+	align-items: center;
 	color: var(--yi-muted);
 	font-size: 13px;
+	font-weight: 700;
+}
+
+.yi-daily-color-row__badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	border-radius: 999px;
+	background: rgba(31, 41, 51, 0.08);
+	color: var(--yi-ink);
+	font-size: 11px;
 }
 
 .yi-daily-color-row strong {
-	display: block;
-	margin-top: 4px;
+	display: inline-flex;
+	gap: 8px;
+	align-items: center;
 	font-size: 20px;
+	color: var(--yi-element-accent, var(--yi-ink));
+}
+
+.yi-daily-color-row__element-badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border: 1px solid color-mix(in srgb, var(--yi-element-accent, var(--yi-ink)) 22%, white);
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--yi-element-accent, var(--yi-ink)) 12%, white);
+	font-size: 14px;
 }
 
 .yi-daily-color-row p {
@@ -500,7 +646,14 @@ a {
 }
 
 .yi-scene-card strong {
+	display: inline-flex;
+	gap: 8px;
+	align-items: center;
 	font-weight: 800;
+}
+
+.yi-scene-card__icon {
+	font-size: 18px;
 }
 
 .yi-scene-card p {
@@ -655,6 +808,15 @@ a {
 
 	.yi-daily-post h2 {
 		font-size: 22px;
+	}
+
+	.yi-entry-header h1 {
+		font-size: 26px;
+	}
+
+	.yi-daily-lead__row {
+		grid-template-columns: 1fr;
+		gap: 8px;
 	}
 }
 

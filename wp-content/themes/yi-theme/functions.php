@@ -26,13 +26,13 @@ add_action(
 			'yi-theme',
 			get_stylesheet_uri(),
 			array(),
-			'0.3.2'
+			'0.3.4'
 		);
 		wp_enqueue_style(
 			'yi-theme-main',
 			get_template_directory_uri() . '/assets/css/main.css',
 			array( 'yi-theme' ),
-			'0.3.2'
+			'0.3.4'
 		);
 	}
 );
