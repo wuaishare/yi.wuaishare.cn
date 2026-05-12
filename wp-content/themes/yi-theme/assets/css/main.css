@@ -195,7 +195,46 @@ a {
 }
 
 .yi-wuxing-tool {
+	--yi-theme-accent: var(--yi-green);
+	--yi-theme-soft: rgba(47, 133, 90, 0.12);
+	--yi-theme-strong: rgba(47, 133, 90, 0.2);
+	--yi-theme-glow: rgba(47, 133, 90, 0.18);
 	padding: 36px 0 24px;
+}
+
+.yi-wuxing-tool.yi-theme-wood {
+	--yi-theme-accent: #2f855a;
+	--yi-theme-soft: rgba(47, 133, 90, 0.12);
+	--yi-theme-strong: rgba(47, 133, 90, 0.2);
+	--yi-theme-glow: rgba(47, 133, 90, 0.18);
+}
+
+.yi-wuxing-tool.yi-theme-fire {
+	--yi-theme-accent: #c53030;
+	--yi-theme-soft: rgba(197, 48, 48, 0.12);
+	--yi-theme-strong: rgba(197, 48, 48, 0.2);
+	--yi-theme-glow: rgba(221, 107, 32, 0.18);
+}
+
+.yi-wuxing-tool.yi-theme-earth {
+	--yi-theme-accent: #b7791f;
+	--yi-theme-soft: rgba(183, 121, 31, 0.13);
+	--yi-theme-strong: rgba(183, 121, 31, 0.22);
+	--yi-theme-glow: rgba(214, 158, 46, 0.18);
+}
+
+.yi-wuxing-tool.yi-theme-metal {
+	--yi-theme-accent: #6b7280;
+	--yi-theme-soft: rgba(148, 163, 184, 0.14);
+	--yi-theme-strong: rgba(107, 114, 128, 0.2);
+	--yi-theme-glow: rgba(143, 107, 24, 0.16);
+}
+
+.yi-wuxing-tool.yi-theme-water {
+	--yi-theme-accent: #1f4e79;
+	--yi-theme-soft: rgba(31, 78, 121, 0.13);
+	--yi-theme-strong: rgba(31, 78, 121, 0.22);
+	--yi-theme-glow: rgba(43, 108, 176, 0.18);
 }
 
 .yi-wuxing-hero {
@@ -204,10 +243,11 @@ a {
 	gap: 28px;
 	align-items: stretch;
 	padding: clamp(24px, 5vw, 48px);
-	border: 1px solid var(--yi-line);
+	border: 1px solid var(--yi-theme-strong);
 	border-radius: var(--yi-radius);
 	background:
-		linear-gradient(135deg, rgba(47, 133, 90, 0.10), rgba(183, 121, 31, 0.13)),
+		radial-gradient(circle at top right, var(--yi-theme-glow), transparent 32%),
+		linear-gradient(135deg, var(--yi-theme-soft), rgba(255, 255, 255, 0.92) 56%),
 		var(--yi-panel);
 }
 
@@ -222,7 +262,7 @@ a {
 .yi-fact,
 .yi-wuxing-advice,
 .yi-wuxing-notes {
-	border: 1px solid var(--yi-line);
+	border: 1px solid color-mix(in srgb, var(--yi-theme-accent) 18%, var(--yi-line));
 	border-radius: var(--yi-radius);
 	background: rgba(255, 255, 255, 0.76);
 }
@@ -237,6 +277,29 @@ a {
 .yi-wuxing-hero__panel strong {
 	font-size: 28px;
 	line-height: 1.25;
+}
+
+.yi-wuxing-relation {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+	margin: 0 0 2px;
+	color: #4b5563;
+}
+
+.yi-wuxing-relation__badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 32px;
+	padding: 0 12px;
+	border: 1px solid var(--yi-theme-strong);
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.74);
+	color: var(--yi-theme-accent);
+	font-size: 13px;
+	font-weight: 800;
 }
 
 .yi-date-form {
@@ -279,6 +342,12 @@ a {
 	font-size: 13px;
 }
 
+.yi-color-card__element {
+	display: inline-flex;
+	gap: 8px;
+	align-items: center;
+}
+
 .yi-fact strong {
 	display: block;
 	margin-top: 4px;
@@ -295,6 +364,26 @@ a {
 	justify-content: space-between;
 	min-height: 250px;
 	padding: 18px;
+}
+
+.yi-color-card[data-level="lucky"] {
+	background: linear-gradient(180deg, color-mix(in srgb, var(--yi-theme-accent) 7%, white), rgba(255, 255, 255, 0.9));
+}
+
+.yi-color-card[data-level="secondary"] {
+	background: linear-gradient(180deg, rgba(31, 78, 121, 0.06), rgba(255, 255, 255, 0.92));
+}
+
+.yi-color-card[data-level="neutral"] {
+	background: linear-gradient(180deg, rgba(183, 121, 31, 0.06), rgba(255, 255, 255, 0.92));
+}
+
+.yi-color-card[data-level="caution"] {
+	background: linear-gradient(180deg, rgba(148, 163, 184, 0.08), rgba(255, 255, 255, 0.92));
+}
+
+.yi-color-card[data-level="avoid"] {
+	background: linear-gradient(180deg, rgba(197, 48, 48, 0.06), rgba(255, 255, 255, 0.92));
 }
 
 .yi-color-card h2 {
@@ -328,6 +417,18 @@ a {
 	border: 1px solid rgba(31, 41, 51, 0.18);
 	border-radius: 999px;
 	background: var(--yi-swatch);
+}
+
+.yi-element-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--yi-theme-accent) 10%, white);
+	font-size: 14px;
+	line-height: 1;
 }
 
 .yi-wuxing-advice,
@@ -543,7 +644,7 @@ a {
 }
 
 .yi-daily-color-row[data-element="金"] {
-	--yi-element-accent: #64748b;
+	--yi-element-accent: #6b7280;
 }
 
 .yi-daily-color-row[data-element="火"] {
@@ -621,6 +722,12 @@ a {
 	color: var(--yi-color-text, var(--yi-color));
 	font-weight: 800;
 	overflow-wrap: anywhere;
+}
+
+.yi-color-token[data-color-name="金色"] {
+	background: linear-gradient(180deg, rgba(255, 248, 218, 0.94), rgba(255, 255, 255, 0.9));
+	border-color: rgba(143, 107, 24, 0.26);
+	color: #7a5a10;
 }
 
 .yi-color-token__swatch {

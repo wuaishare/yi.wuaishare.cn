@@ -33,7 +33,7 @@ final class ClothingColors {
 			array( 'name' => '白色', 'hex' => '#f7fafc', 'text_hex' => '#4b5563' ),
 			array( 'name' => '银色', 'hex' => '#cbd5e0', 'text_hex' => '#64748b' ),
 			array( 'name' => '灰色', 'hex' => '#718096' ),
-			array( 'name' => '金色', 'hex' => '#b7791f' ),
+			array( 'name' => '金色', 'hex' => '#8f6b18', 'text_hex' => '#7a5a10' ),
 			array( 'name' => '米白', 'hex' => '#f5f0df', 'text_hex' => '#7c6f4d' ),
 		),
 		'水' => array(

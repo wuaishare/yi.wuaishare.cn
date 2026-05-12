@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Yi Tools Core
  * Description: 吾爱易学工具核心，提供五行穿衣查询的算法、REST API、SEO 与日更内容命令。
- * Version: 0.3.3
+ * Version: 0.3.4
  * Author: Wuaishare
  * Text Domain: yi-tools-core
  * Requires at least: 6.9
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'YI_TOOLS_CORE_VERSION', '0.3.3' );
+define( 'YI_TOOLS_CORE_VERSION', '0.3.4' );
 define( 'YI_TOOLS_CORE_FILE', __FILE__ );
 define( 'YI_TOOLS_CORE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'YI_TOOLS_CORE_URL', plugin_dir_url( __FILE__ ) );

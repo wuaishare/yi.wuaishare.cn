@@ -28,11 +28,13 @@ final class WuxingClothingShortcode {
 		$previous = gmdate( 'Y-m-d', strtotime( $result['date'] . ' -1 day' ) );
 		$next     = gmdate( 'Y-m-d', strtotime( $result['date'] . ' +1 day' ) );
 		$today    = wp_date( 'Y-m-d' );
+		$lucky    = $result['elements']['lucky'];
+		$theme    = ColorMarkup::element_slug( $lucky );
 
 		ob_start();
 		?>
-		<section class="yi-wuxing-tool" data-yi-tool="wuxing-clothing">
-			<div class="yi-wuxing-hero yi-season-<?php echo esc_attr( $result['season'] ); ?>">
+		<section class="yi-wuxing-tool yi-theme-<?php echo esc_attr( $theme ); ?>" data-yi-tool="wuxing-clothing" data-lucky-element="<?php echo esc_attr( $lucky ); ?>" data-day-element="<?php echo esc_attr( $result['day_element'] ); ?>">
+			<div class="yi-wuxing-hero yi-season-<?php echo esc_attr( $result['season'] ); ?> yi-lucky-<?php echo esc_attr( $theme ); ?>">
 				<div class="yi-wuxing-hero__body">
 					<p class="yi-wuxing-kicker">五行穿衣指南</p>
 					<h1>
@@ -42,6 +44,7 @@ final class WuxingClothingShortcode {
 					<p class="yi-wuxing-summary">
 						<?php echo esc_html( $result['weekday'] ); ?>，<?php echo esc_html( $result['ganzhi_day'] ); ?>，日五行为<?php echo esc_html( $result['day_element'] ); ?>。
 					</p>
+					<p class="yi-wuxing-relation"><span class="yi-wuxing-relation__badge"><?php echo esc_html( $result['day_element'] . '生' . $lucky ); ?></span><span>今日宜把<?php echo esc_html( $lucky ); ?>系放在主色位置。</span></p>
 					<div class="yi-wuxing-actions">
 						<a class="yi-button yi-button--ghost yi-button--prev" href="<?php echo esc_url( add_query_arg( 'date', $previous ) ); ?>">前一天</a>
 						<form class="yi-date-form" method="get">
@@ -54,7 +57,7 @@ final class WuxingClothingShortcode {
 					</div>
 				</div>
 				<div class="yi-wuxing-hero__panel" aria-label="今日大吉色">
-					<span>大吉色</span>
+					<span>大吉色 · <?php echo esc_html( $lucky ); ?>系</span>
 					<strong><?php echo esc_html( ColorMarkup::names( $result['colors']['lucky'] ) ); ?></strong>
 					<?php self::render_swatches( $result['colors']['lucky'] ); ?>
 				</div>
@@ -74,11 +77,11 @@ final class WuxingClothingShortcode {
 			</div>
 
 			<div class="yi-color-grid" aria-label="穿衣颜色推荐">
-				<?php self::render_color_card( '大吉色', '当日五行所生，适合优先使用。', $result['elements']['lucky'], $result['colors']['lucky'] ); ?>
-				<?php self::render_color_card( '次吉色', '与当日五行相同，稳妥顺手。', $result['elements']['secondary'], $result['colors']['secondary'] ); ?>
-				<?php self::render_color_card( '平平色', '颜色五行克当日五行，普通场景可少量使用。', $result['elements']['neutral'], $result['colors']['neutral'] ); ?>
-				<?php self::render_color_card( '慎用色', '颜色五行生当日五行，容易被动消耗。', $result['elements']['caution'], $result['colors']['caution'] ); ?>
-				<?php self::render_color_card( '不宜色', '当日五行克颜色五行，今日不建议作为主色。', $result['elements']['avoid'], $result['colors']['avoid'] ); ?>
+				<?php self::render_color_card( 'lucky', '大吉色', '当日五行所生，适合优先使用。', $result['elements']['lucky'], $result['colors']['lucky'] ); ?>
+				<?php self::render_color_card( 'secondary', '次吉色', '与当日五行相同，稳妥顺手。', $result['elements']['secondary'], $result['colors']['secondary'] ); ?>
+				<?php self::render_color_card( 'neutral', '平平色', '颜色五行克当日五行，普通场景可少量使用。', $result['elements']['neutral'], $result['colors']['neutral'] ); ?>
+				<?php self::render_color_card( 'caution', '慎用色', '颜色五行生当日五行，容易被动消耗。', $result['elements']['caution'], $result['colors']['caution'] ); ?>
+				<?php self::render_color_card( 'avoid', '不宜色', '当日五行克颜色五行，今日不建议作为主色。', $result['elements']['avoid'], $result['colors']['avoid'] ); ?>
 			</div>
 
 			<div class="yi-wuxing-advice">
@@ -104,11 +107,11 @@ final class WuxingClothingShortcode {
 		<?php
 	}
 
-	private static function render_color_card( string $title, string $description, string $element, array $colors ): void {
+	private static function render_color_card( string $level, string $title, string $description, string $element, array $colors ): void {
 		?>
-		<article class="yi-color-card">
+		<article class="yi-color-card" data-level="<?php echo esc_attr( $level ); ?>" data-element="<?php echo esc_attr( $element ); ?>">
 			<div>
-				<span class="yi-color-card__element"><?php echo esc_html( $element ); ?>系</span>
+				<span class="yi-color-card__element"><span class="yi-element-icon" aria-hidden="true"><?php echo esc_html( ColorMarkup::element_icon( $element ) ); ?></span><?php echo esc_html( $element ); ?>系</span>
 				<h2><?php echo esc_html( $title ); ?></h2>
 				<p><?php echo esc_html( $description ); ?></p>
 			</div>

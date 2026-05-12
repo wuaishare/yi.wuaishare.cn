@@ -128,7 +128,7 @@ final class DailyPostCommand {
 				<div class="yi-daily-lead" role="note" aria-label="今日穿衣重点">
 					<?php echo wp_kses_post( $this->render_lead_row( 'lucky', $label . '大吉色', ColorMarkup::tokens( $result['colors']['lucky'], $result['elements']['lucky'] ) ) ); ?>
 					<?php echo wp_kses_post( $this->render_lead_row( 'secondary', '次吉色可选', ColorMarkup::tokens( $result['colors']['secondary'], $result['elements']['secondary'] ) ) ); ?>
-					<?php echo wp_kses_post( $this->render_lead_row( 'avoid', '穿衣提醒', esc_html( self::color_names( $result['colors']['avoid'] ) ) . '不建议大面积使用。' ) ); ?>
+					<?php echo wp_kses_post( $this->render_lead_row( 'avoid', '少穿这些色', esc_html( self::color_names( $result['colors']['avoid'] ) ) . '不建议大面积使用。' ) ); ?>
 				</div>
 			</section>
 
@@ -178,7 +178,7 @@ final class DailyPostCommand {
 			esc_attr( $element ),
 			esc_html( self::level_icon( $level ) ),
 			esc_html( $title ),
-			esc_html( mb_substr( $element, 0, 1 ) ),
+			esc_html( ColorMarkup::element_icon( $element ) ),
 			esc_html( $element . '系' ),
 			ColorMarkup::tokens( $colors, $element ),
 			esc_html( $description )
