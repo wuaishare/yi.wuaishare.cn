@@ -34,6 +34,9 @@ final class DailyPostCommand {
 
 		if ( $existing ) {
 			$post_data['ID'] = (int) $existing->ID;
+			$post_data['post_title'] = $post_data['post_title'];
+			$post_data['post_excerpt'] = $post_data['post_excerpt'];
+			$post_data['post_content'] = $post_data['post_content'];
 		}
 
 		$post_id = wp_insert_post( $post_data, true );
@@ -90,11 +93,13 @@ final class DailyPostCommand {
 	}
 
 	private function build_post_data( array $result ): array {
+		$display_date = $result['display_date'];
+		$lucky_names  = self::color_names( $result['colors']['lucky'] );
+		$lucky_phrase = self::element_phrase( $result['elements']['lucky'] );
 		$title = sprintf(
-			'%s五行穿衣指南：%s大吉色%s',
-			$result['display_date'],
-			self::relative_label( $result['date'] ),
-			self::color_names( $result['colors']['lucky'] )
+			'%s穿什么颜色更顺？%s是今日主色',
+			$display_date,
+			$lucky_phrase
 		);
 
 		return array(
@@ -103,12 +108,12 @@ final class DailyPostCommand {
 			'post_title'   => $title,
 			'post_name'    => 'wuxing-chuanyi-' . $result['date'],
 			'post_excerpt' => sprintf(
-				'%s五行穿衣参考：%s，日五行为%s，%s大吉色%s，次吉色%s。',
-				$result['display_date'],
+				'%s，%s，日五行为%s。今日主色偏向%s，大吉色是%s，次吉色是%s。',
+				$display_date,
 				$result['ganzhi_day'],
 				$result['day_element'],
-				self::relative_label( $result['date'] ),
-				self::color_names( $result['colors']['lucky'] ),
+				$lucky_phrase,
+				$lucky_names,
 				self::color_names( $result['colors']['secondary'] )
 			),
 			'post_content' => $this->build_post_content( $result ),
