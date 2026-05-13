@@ -660,6 +660,10 @@ a {
 	display: inline-flex;
 	gap: 6px;
 	align-items: center;
+	width: fit-content;
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: rgba(31, 41, 51, 0.06);
 	color: var(--yi-muted);
 	font-size: 13px;
 	font-weight: 700;
@@ -675,6 +679,56 @@ a {
 	background: rgba(31, 41, 51, 0.08);
 	color: var(--yi-ink);
 	font-size: 11px;
+}
+
+.yi-daily-color-row[data-level="lucky"] .yi-daily-color-row__label {
+	background: rgba(47, 133, 90, 0.14);
+	color: var(--yi-green);
+}
+
+.yi-daily-color-row[data-level="lucky"] .yi-daily-color-row__badge {
+	background: rgba(47, 133, 90, 0.2);
+	color: var(--yi-green);
+}
+
+.yi-daily-color-row[data-level="secondary"] .yi-daily-color-row__label {
+	background: rgba(31, 78, 121, 0.12);
+	color: var(--yi-blue);
+}
+
+.yi-daily-color-row[data-level="secondary"] .yi-daily-color-row__badge {
+	background: rgba(31, 78, 121, 0.18);
+	color: var(--yi-blue);
+}
+
+.yi-daily-color-row[data-level="neutral"] .yi-daily-color-row__label {
+	background: rgba(183, 121, 31, 0.11);
+	color: #986311;
+}
+
+.yi-daily-color-row[data-level="neutral"] .yi-daily-color-row__badge {
+	background: rgba(183, 121, 31, 0.17);
+	color: #986311;
+}
+
+.yi-daily-color-row[data-level="caution"] .yi-daily-color-row__label {
+	background: rgba(107, 114, 128, 0.12);
+	color: #64748b;
+}
+
+.yi-daily-color-row[data-level="caution"] .yi-daily-color-row__badge {
+	background: rgba(107, 114, 128, 0.16);
+	color: #64748b;
+}
+
+.yi-daily-color-row[data-level="avoid"] .yi-daily-color-row__label {
+	background: rgba(184, 50, 42, 0.12);
+	color: var(--yi-red);
+}
+
+.yi-daily-color-row[data-level="avoid"] .yi-daily-color-row__badge {
+	background: rgba(184, 50, 42, 0.18);
+	color: var(--yi-red);
 }
 
 .yi-daily-color-row strong {
